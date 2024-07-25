@@ -18,6 +18,11 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	orangepi-5-pro-cam1.dtbo \
 	orangepi-5-pro-cam2.dtbo \
 	orangepi-5-pro-disable-leds.dtbo \
+	orangepi-5-max-cam0.dtbo \
+	orangepi-5-max-cam1.dtbo \
+	orangepi-5-max-cam2.dtbo \
+	orangepi-5-max-disable-leds.dtbo \
+	orangepi-5-max-lcd.dtbo \
 	orangepi-5-ov5647-c1.dtbo \
 	orangepi-5-ov5647-c2.dtbo \
 	orangepi-5-ov5647-c3.dtbo \
@@ -33,6 +38,11 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	orangepi-5-ov13855-c1.dtbo \
 	orangepi-5-ov13855-c2.dtbo \
 	orangepi-5-ov13855-c3.dtbo \
+	orangepi-cm5-blink-gpio.dtbo \
+	orangepi-cm5-cam1.dtbo \
+	orangepi-cm5-cam2.dtbo \
+	orangepi-cm5-cam3.dtbo \
+	orangepi-cm5-cam4.dtbo \
 	rock-5a-hdmi-8k.dtbo \
 	rock-5a-i2c5-rtc-hym8563.dtbo \
 	rock-5a-radxa-camera-4k.dtbo \
