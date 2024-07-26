@@ -6,10 +6,10 @@
 
 #include "dt-bindings/usb/pd.h"
 #include "rk3588s.dtsi"
-#include "rk3588s-evb-yyt-r1.dtsi"
+#include "rk3588s-evb-youyeetoo-r1.dtsi"
 #include "rk3588-rk806-single.dtsi"
-#include "rk3588s-yyt-r1-gc8034.dtsi"
-#include "rk3588s-lcd-yyt-r1.dtsi"
+#include "rk3588s-youyeetoo-r1-gc8034.dtsi"
+#include "rk3588s-lcd-youyeetoo-r1.dtsi"
 #define USBHOST3_0 0
 #define SATA  0
 / {

@@ -6,7 +6,7 @@
 
 /dts-v1/;
 
-#include "rk3588s-evb4-lp4x-yyt-r1.dtsi"
+#include "rk3588s-evb4-lp4x-youyeetoo-r1.dtsi"
 #include "rk3588-linux.dtsi"
 
 / {
