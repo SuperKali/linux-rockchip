@@ -323,12 +323,12 @@
 };
 
 &dp0 {
-        status = "disalbed";
+        status = "disabled";
 };
 
 
 &dp0_in_vp1 {
-        status = "disalbed";
+        status = "disabled";
 };
 
 /*
@@ -457,7 +457,7 @@
 
         gt1x: gt1x@14 {
                 compatible = "goodix,gt1x";
-                status = "disalbed";
+                status = "disabled";
                 reg = <0x14>;
                 pinctrl-names = "default";
                 pinctrl-0 = <&touch_gpio>;
@@ -895,7 +895,7 @@
 	remote_pwm_id = <3>;
 	handle_cpu_id = <1>;
 	remote_support_psci = <0>;
-        status = "disalbed";
+        status = "disabled";
 
 	ir_key1 {
 		rockchip,usercode = <0x4040>;
