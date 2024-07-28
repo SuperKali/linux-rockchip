@@ -4,12 +4,113 @@
  *
  */
 
-/dts-v1/;
-
-#include "rk3588s-evb1-lp4x.dtsi"
-#include "rk3588-linux.dtsi"
+#include "rk3588s-yyt-common.dtsi"
 
 / {
 	model = "Youyeetoo R1";
 	compatible = "youyeetoo,r1", "rockchip,rk3588";
+
+	gpio_keys: gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&key1_pin>;
+
+		button@1 {
+			debounce-interval = <50>;
+			gpios = <&gpio1 RK_PC0 GPIO_ACTIVE_LOW>;
+			label = "K1";
+			linux,code = <BTN_1>;
+			wakeup-source;
+		};
+	};
+
+	vcc5v0_host_20: vcc5v0-host-20 {
+		compatible = "regulator-fixed";
+		enable-active-high;
+		gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vcc5v0_host20_en>;
+		regulator-name = "vcc5v0_host_20";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&vcc5v0_usb>;
+	};
+};
+
+
+# TODO: Needs to be reviewed 
+&pinctrl {
+	gpio-key {
+		key1_pin: key1-pin {
+			rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
+	usb {
+		vcc5v0_host20_en: vcc5v0-host20-en {
+			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};
+
+&i2c6 {
+	clock-frequency = <200000>;
+	status = "okay";
+
+	eeprom@53 {
+		compatible = "microchip,24c02", "atmel,24c02";
+		reg = <0x53>;
+		#address-cells = <2>;
+		#size-cells = <0>;
+		pagesize = <16>;
+		size = <256>;
+
+		eui_48: eui-48@fa {
+			reg = <0xfa 0x06>;
+		};
+	};
+};
+
+&u2phy0 {
+	status = "okay";
+};
+
+&u2phy0_otg {
+	phy-supply = <&vbus5v0_typec>;
+	status = "okay";
+};
+
+&u2phy2 {
+	status = "okay";
+};
+
+&u2phy2_host {
+	phy-supply = <&vcc5v0_host_20>;
+	status = "okay";
+};
+
+&vp0 {
+	rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER0 | 1 << ROCKCHIP_VOP2_ESMART0 |
+				1 << ROCKCHIP_VOP2_CLUSTER1)>;
+	rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER0>;
+	cursor-win-id = <ROCKCHIP_VOP2_ESMART0>;
+};
+
+&vp1 {
+	rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER2 | 1 << ROCKCHIP_VOP2_ESMART1 |
+				1 << ROCKCHIP_VOP2_ESMART2)>;
+	rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER2>;
+	cursor-win-id = <ROCKCHIP_VOP2_ESMART1>;
+};
+
+&vp2 {
+	/delete-property/ rockchip,plane-mask;
+	/delete-property/ rockchip,primary-plane;
+	status = "disabled";
+};
+
+&vp3 {
+	/delete-property/ rockchip,plane-mask;
+	/delete-property/ rockchip,primary-plane;
+	status = "disabled";
 };
