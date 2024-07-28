@@ -4,6 +4,8 @@
  *
  */
 
+/dts-v1/;
+
 #include "rk3588s-yyt-common.dtsi"
 
 / {
@@ -38,7 +40,7 @@
 };
 
 
-# TODO: Needs to be reviewed 
+// TODO: Needs to be reviewed 
 &pinctrl {
 	gpio-key {
 		key1_pin: key1-pin {
