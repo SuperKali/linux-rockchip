@@ -77,11 +77,6 @@
 	status = "okay";
 };
 
-&u2phy0_otg {
-	phy-supply = <&vbus5v0_typec>;
-	status = "okay";
-};
-
 &u2phy2 {
 	status = "okay";
 };
