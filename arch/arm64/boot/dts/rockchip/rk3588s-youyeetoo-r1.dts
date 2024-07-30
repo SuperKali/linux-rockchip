@@ -8,8 +8,6 @@
 
 #include "rk3588s-yyt-common.dtsi"
 
-#define USBHOST3_0 0
-
 / {
 	model = "Youyeetoo R1";
 	compatible = "youyeetoo,r1", "rockchip,rk3588";
@@ -147,29 +145,6 @@
                         };
                 };
         };
-};
-
-#if USBHOST3_0
-
-&u2phy3_host {
-        phy-supply = <&vbus5v0_usb3>;
-        status = "okay";
-};
-
-&usbhost_dwc3_0 {
-        dr_mode = "host";
-        status = "okay";
-};
-
-#else
-
-
-&usbhost3_0 {
-    status = "disabled";
-};
-
-&usbhost_dwc3_0{
-    status = "disabled";
 };
 
 &u2phy0 {
