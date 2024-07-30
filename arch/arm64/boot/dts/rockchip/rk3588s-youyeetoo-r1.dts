@@ -123,11 +123,11 @@
 };
 
 // USB2 PHY node for USB3
-&u2phy1 {
+&u2phy2 {
     status = "okay";
 };
 
-&u2phy1_host {
+&u2phy2_host {
     phy-supply = <&vcc5v0_host_20>;
     status = "okay";
 };
@@ -136,7 +136,7 @@
 &usbdrd3_0 {
     dr_mode = "host";
     maximum-speed = "super-speed";
-    phys = <&u2phy1>;
+    phys = <&u2phy2>;
     phy-names = "usb3-phy";
     status = "okay";
 };
