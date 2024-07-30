@@ -9,194 +9,145 @@
 #include "rk3588s-yyt-common.dtsi"
 
 / {
-	model = "Youyeetoo R1";
-	compatible = "youyeetoo,r1", "rockchip,rk3588";
+    model = "Youyeetoo R1";
+    compatible = "youyeetoo,r1", "rockchip,rk3588";
 
-	gpio_keys: gpio-keys {
-		compatible = "gpio-keys";
-		pinctrl-names = "default";
-		pinctrl-0 = <&key1_pin>;
+    gpio_keys: gpio-keys {
+        compatible = "gpio-keys";
+        pinctrl-names = "default";
+        pinctrl-0 = <&key1_pin>;
 
-		button@1 {
-			debounce-interval = <50>;
-			gpios = <&gpio1 RK_PC0 GPIO_ACTIVE_LOW>;
-			label = "K1";
-			linux,code = <BTN_1>;
-			wakeup-source;
-		};
-	};
-
-	vcc5v0_host_20: vcc5v0-host-20 {
-		compatible = "regulator-fixed";
-		enable-active-high;
-		gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&vcc5v0_host20_en>;
-		regulator-name = "vcc5v0_host_20";
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-		vin-supply = <&vcc5v0_usb>;
-	};
-
-	vbus5v0_typec: vbus5v0-typec {
-		compatible = "regulator-fixed";
-		regulator-name = "vbus5v0_typec";
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-		enable-active-high;
-                gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
-		vin-supply = <&vcc5v0_usb>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&typec5v_pwren>;
-	};
-
-        usb30_power_ver1{//1c7
-                compatible = "lylx,xgpio";
-                gpio              = <&gpio4 7  GPIO_ACTIVE_HIGH>;
-                def_val = <1>;
-                //delayms = <200>;
-                status = "okay";
+        button@1 {
+            debounce-interval = <50>;
+            gpios = <&gpio1 RK_PC0 GPIO_ACTIVE_LOW>;
+            label = "K1";
+            linux,code = <BTN_1>;
+            wakeup-source;
         };
-        usb30_power{//0 B0
-                compatible = "lylx,xgpio";
-                gpio              = <&gpio0 8  GPIO_ACTIVE_HIGH>;
-                def_val = <1>;
-                //delayms = <200>;
-                status = "okay";
-        };
+    };
+
+    vcc5v0_host_20: vcc5v0-host-20 {
+        compatible = "regulator-fixed";
+        enable-active-high;
+        gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&vcc5v0_host20_en>;
+        regulator-name = "vcc5v0_host_20";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        vin-supply = <&vcc5v0_usb>;
+    };
+
+    usb30_power_ver1 {//1c7
+        compatible = "lylx,xgpio";
+        gpio = <&gpio4 7 GPIO_ACTIVE_HIGH>;
+        def_val = <1>;
+        status = "okay";
+    };
+
+    usb30_power {//0 B0
+        compatible = "lylx,xgpio";
+        gpio = <&gpio0 8 GPIO_ACTIVE_HIGH>;
+        def_val = <1>;
+        status = "okay";
+    };
 };
 
-
-// TODO: Needs to be reviewed 
 &pinctrl {
-	gpio-key {
-		key1_pin: key1-pin {
-			rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
+    gpio-key {
+        key1_pin: key1-pin {
+            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
 
-	usb {
-		vcc5v0_host20_en: vcc5v0-host20-en {
-			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
+    usb {
+        vcc5v0_host20_en: vcc5v0-host20-en {
+            rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+        vcc5v0_host_en: vcc5v0-host-en {
+            rockchip,pins = <1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
 };
 
 &i2c6 {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&i2c6m3_xfer>;
+
+    hym8563: hym8563@51 {
+        compatible = "haoyu,hym8563";
+        reg = <0x51>;
+        #clock-cells = <0>;
+        clock-frequency = <32768>;
+        clock-output-names = "hym8563";
         status = "okay";
-        pinctrl-names = "default";
-        pinctrl-0 = <&i2c6m3_xfer>;
-
-        hym8563: hym8563@51 {
-                compatible = "haoyu,hym8563";
-                reg = <0x51>;
-                #clock-cells = <0>;
-                clock-frequency = <32768>;
-                clock-output-names = "hym8563";
-                status = "okay";
-        };
-        usbc0: fusb302@22 {
-                compatible = "fcs,fusb302";
-                reg = <0x22>;
-                interrupt-parent = <&gpio0>;
-                interrupts = <RK_PC4 IRQ_TYPE_LEVEL_LOW>;
-                pinctrl-names = "default";
-                pinctrl-0 = <&usbc0_int>;
-                vbus-supply = <&vbus5v0_typec>;
-                status = "okay";
-
-                ports {
-                        #address-cells = <1>;
-                        #size-cells = <0>;
-
-                        port@0 {
-                                reg = <0>;
-                                usbc0_role_sw: endpoint@0 {
-                                        remote-endpoint = <&dwc3_0_role_switch>;
-                                };
-                        };
-                };
-
-                usb_con: connector {
-                        compatible = "usb-c-connector";
-                        label = "USB-C";
-                        data-role = "dual";
-                        power-role = "dual";
-                        try-power-role = "sink";
-                        op-sink-microwatt = <1000000>;
-                        sink-pdos =
-                                <PDO_FIXED(5000, 1000, PDO_FIXED_USB_COMM)>;
-                        source-pdos =
-                                <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
-
-                        altmodes {
-                                #address-cells = <1>;
-                                #size-cells = <0>;
-
-                                altmode@0 {
-                                        reg = <0>;
-                                        svid = <0xff01>;
-                                        vdo = <0xffffffff>;
-                                };
-                        };
-
-                        ports {
-                                #address-cells = <1>;
-                                #size-cells = <0>;
-
-                                port@0 {
-                                        reg = <0>;
-                                        usbc0_orien_sw: endpoint {
-                                                remote-endpoint = <&usbdp_phy0_orientation_switch>;
-                                        };
-                                };
-
-                                port@1 {
-                                        reg = <1>;
-                                        dp_altmode_mux: endpoint {
-                                                remote-endpoint = <&usbdp_phy0_dp_altmode_mux>;
-                                        };
-                                };
-                        };
-                };
-        };
+    };
 };
 
 &u2phy0 {
-	status = "okay";
+    status = "okay";
 };
 
 &u2phy2 {
-	status = "okay";
+    status = "okay";
 };
 
 &u2phy2_host {
-	phy-supply = <&vcc5v0_host_20>;
-	status = "okay";
+    phy-supply = <&vcc5v0_host_20>;
+    status = "okay";
 };
 
 &vp0 {
-	rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER0 | 1 << ROCKCHIP_VOP2_ESMART0 |
-				1 << ROCKCHIP_VOP2_CLUSTER1)>;
-	rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER0>;
-	cursor-win-id = <ROCKCHIP_VOP2_ESMART0>;
+    rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER0 | 1 << ROCKCHIP_VOP2_ESMART0 | 1 << ROCKCHIP_VOP2_CLUSTER1)>;
+    rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER0>;
+    cursor-win-id = <ROCKCHIP_VOP2_ESMART0>;
 };
 
 &vp1 {
-	rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER2 | 1 << ROCKCHIP_VOP2_ESMART1 |
-				1 << ROCKCHIP_VOP2_ESMART2)>;
-	rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER2>;
-	cursor-win-id = <ROCKCHIP_VOP2_ESMART1>;
+    rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER2 | 1 << ROCKCHIP_VOP2_ESMART1 | 1 << ROCKCHIP_VOP2_ESMART2)>;
+    rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER2>;
+    cursor-win-id = <ROCKCHIP_VOP2_ESMART1>;
 };
 
 &vp2 {
-	/delete-property/ rockchip,plane-mask;
-	/delete-property/ rockchip,primary-plane;
-	status = "disabled";
+    /delete-property/ rockchip,plane-mask;
+    /delete-property/ rockchip,primary-plane;
+    status = "disabled";
 };
 
 &vp3 {
-	/delete-property/ rockchip,plane-mask;
-	/delete-property/ rockchip,primary-plane;
-	status = "disabled";
+    /delete-property/ rockchip,plane-mask;
+    /delete-property/ rockchip,primary-plane;
+    status = "disabled";
+};
+
+// USB2 PHY node for USB3
+&u2phy1 {
+    status = "okay";
+};
+
+&u2phy1_host {
+    phy-supply = <&vcc5v0_host_20>;
+    status = "okay";
+};
+
+// USB3 Controller
+&usbdrd_dwc3_0 {
+    dr_mode = "host";
+    maximum-speed = "super-speed";
+    phys = <&u2phy1>;
+    phy-names = "usb3-phy";
+    status = "okay";
+};
+
+// Ensure USB 2.0 host is properly configured
+&usb_host0 {
+    dr_mode = "host";
+    status = "okay";
+};
+
+&usb_host1 {
+    dr_mode = "host";
+    status = "okay";
 };
