@@ -133,7 +133,7 @@
 };
 
 // USB3 Controller
-&usbdrd_dwc3_0 {
+&usbdrd3_0 {
     dr_mode = "host";
     maximum-speed = "super-speed";
     phys = <&u2phy1>;
@@ -142,12 +142,22 @@
 };
 
 // Ensure USB 2.0 host is properly configured
-&usb_host0 {
+&usb_host0_ehci {
     dr_mode = "host";
     status = "okay";
 };
 
-&usb_host1 {
+&usb_host0_ohci {
+    dr_mode = "host";
+    status = "okay";
+};
+
+&usb_host1_ehci {
+    dr_mode = "host";
+    status = "okay";
+};
+
+&usb_host1_ohci {
     dr_mode = "host";
     status = "okay";
 };
