@@ -16,7 +16,7 @@
 #include "rk3588-rk806-single.dtsi"
 #include "rk3588-linux.dtsi"
 
-#define USBHOST3_0 1
+#define USBHOST3_0 0
 
 / {
 	aliases {
@@ -723,7 +723,19 @@
 	status = "okay";
 };
 
+&usb_host1_ehci {
+	status = "okay";
+};
+
+&usb_host1_ohci {
+	status = "okay";
+};
+
 &usbdp_phy0 {
+	status = "okay";
+};
+
+&usbdp_phy0_dp {
 	status = "okay";
 };
 
@@ -731,16 +743,33 @@
 	status = "okay";
 };
 
-#if USBHOST3_0
+&usbdrd3_0 {
+	status = "okay";
+};
 
-&u2phy3_host {
-        phy-supply = <&vbus5v0_usb3>;
-        status = "okay";
+&usbdrd_dwc3_0 {
+	dr_mode = "peripheral";
+	status = "okay";
+};
+
+&usbhost3_0 {
+	status = "okay";
 };
 
 &usbhost_dwc3_0 {
-        dr_mode = "host";
-        status = "okay";
+	status = "okay";
+};
+
+#if USBHOST3_0
+
+&u2phy3_host {
+	phy-supply = <&vbus5v0_usb3>;
+	status = "okay";
+};
+
+&usbhost_dwc3_0 {
+	dr_mode = "host";
+	status = "okay";
 };
 
 #else
