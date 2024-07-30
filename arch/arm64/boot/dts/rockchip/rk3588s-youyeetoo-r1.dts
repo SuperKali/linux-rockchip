@@ -38,6 +38,16 @@
         vin-supply = <&vcc5v0_usb>;
     };
 
+    vbus5v0_usb3: vbus5v0-usb3 {
+        compatible = "regulator-fixed";
+        regulator-name = "vbus5v0_usb3";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        enable-active-high;
+        gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
+        vin-supply = <&vcc5v0_usb>;
+    };
+
     usb30_power_ver1 {//1c7
         compatible = "lylx,xgpio";
         gpio = <&gpio4 7 GPIO_ACTIVE_HIGH>;
@@ -91,6 +101,7 @@
 
 &u2phy2 {
     status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2_host {
@@ -125,6 +136,7 @@
 // USB2 PHY node for USB3
 &u2phy2 {
     status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2_host {
