@@ -16,7 +16,6 @@
 #include "rk3588-rk806-single.dtsi"
 #include "rk3588-linux.dtsi"
 
-#define USBHOST3_0 0
 
 / {
 	aliases {
@@ -309,72 +308,6 @@
         interrupts = <RK_PB0 IRQ_TYPE_LEVEL_LOW>;
         wakeup-source;
     };
-
-    usbc0: fusb302@22 {
-        compatible = "fcs,fusb302";
-        reg = <0x22>;
-        interrupt-parent = <&gpio0>;
-        interrupts = <RK_PC4 IRQ_TYPE_LEVEL_LOW>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&usbc0_int>;
-        vbus-supply = <&vbus5v0_typec>;
-        status = "okay";
-
-        ports {
-            #address-cells = <1>;
-            #size-cells = <0>;
-
-            port@0 {
-                reg = <0>;
-                usbc0_role_sw: endpoint@0 {
-                    remote-endpoint = <&dwc3_0_role_switch>;
-                };
-            };
-        };
-
-        usb_con: connector {
-            compatible = "usb-c-connector";
-            label = "USB-C";
-            data-role = "dual";
-            power-role = "dual";
-            try-power-role = "sink";
-            op-sink-microwatt = <1000000>;
-            sink-pdos =
-                <PDO_FIXED(5000, 1000, PDO_FIXED_USB_COMM)>;
-            source-pdos =
-                <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
-
-            altmodes {
-                #address-cells = <1>;
-                #size-cells = <0>;
-
-                altmode@0 {
-                    reg = <0>;
-                    svid = <0xff01>;
-                    vdo = <0xffffffff>;
-                };
-            };
-
-            ports {
-                #address-cells = <1>;
-                #size-cells = <0>;
-
-                port@0 {
-                    reg = <0>;
-                    usbc0_orien_sw: endpoint {
-                        remote-endpoint = <&usbdp_phy0_orientation_switch>;
-                    };
-                };
-
-                port@1 {
-                    reg = <1>;
-                    dp_altmode_mux: endpoint {
-                        remote-endpoint = <&usbdp_phy0_dp_altmode_mux>;
-                    };
-                };
-            };
-        };
-    };
 };
 
 
@@ -465,17 +398,6 @@
 	sdmmc {
 		sd_s0_pwr: sd-s0-pwr {
 			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
-
-	usb {
-		typec5v_pwren: typec5v-pwren {
-			rockchip,pins = <1 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		/omit-if-no-ref/
-		usbc0_int: usbc0-int {
-			rockchip,pins = <0 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>;
 		};
 	};
 };
@@ -661,40 +583,6 @@
 	status = "okay";
 };
 
-&usbdp_phy0 {
-	orientation-switch;
-	svid = <0xff01>;
-        sbu1-dc-gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_HIGH>;
-        sbu2-dc-gpios = <&gpio4 RK_PA1 GPIO_ACTIVE_HIGH>;
-        status = "okay";
-	port {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		usbdp_phy0_orientation_switch: endpoint@0 {
-			reg = <0>;
-			remote-endpoint = <&usbc0_orien_sw>;
-		};
-
-		usbdp_phy0_dp_altmode_mux: endpoint@1 {
-			reg = <1>;
-			remote-endpoint = <&dp_altmode_mux>;
-		};
-	};
-};
-
-&usbdrd_dwc3_0 {
-	usb-role-switch;
-	port {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		dwc3_0_role_switch: endpoint@0 {
-			reg = <0>;
-			remote-endpoint = <&usbc0_role_sw>;
-		};
-	};
-};
-
-
 &tsadc {
 	status = "okay";
 };
@@ -747,11 +635,6 @@
 	status = "okay";
 };
 
-&usbdrd_dwc3_0 {
-	dr_mode = "peripheral";
-	status = "okay";
-};
-
 &usbhost3_0 {
 	status = "okay";
 };
@@ -759,8 +642,6 @@
 &usbhost_dwc3_0 {
 	status = "okay";
 };
-
-#if USBHOST3_0
 
 &u2phy3_host {
 	phy-supply = <&vbus5v0_usb3>;
@@ -771,19 +652,6 @@
 	dr_mode = "host";
 	status = "okay";
 };
-
-#else
-
-
-&usbhost3_0 {
-    status = "disabled";
-};
-
-&usbhost_dwc3_0{
-    status = "disabled";
-};
-
-#endif
 
 &vdpu {
 	status = "okay";
