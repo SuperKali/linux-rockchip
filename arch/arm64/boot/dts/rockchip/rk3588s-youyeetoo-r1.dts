@@ -102,10 +102,12 @@
 
 &u2phy0 {
     status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2 {
     status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2_host {
