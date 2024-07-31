@@ -26,6 +26,13 @@
         };
     };
 
+    fan_ctrl {
+        compatible = "lylx,xgpio";
+        gpio = <&gpio0 23 GPIO_ACTIVE_HIGH>;
+        def_val = <0>;
+        status = "okay";
+    };     
+
     usb30_power_ver1 {
         compatible = "lylx,xgpio";
         gpio = <&gpio4 7 GPIO_ACTIVE_HIGH>;
@@ -45,6 +52,22 @@
     gpio-key {
         key1_pin: key1-pin {
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
+
+    xgpio{
+        gpio_4g:gpio-4g{
+                rockchip,pins =
+                        <0 23  RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
+                        <4 7  RK_FUNC_GPIO &pcfg_pull_up>,
+                        <0 8  RK_FUNC_GPIO &pcfg_pull_up>;
+                        //<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
+                        //<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
         };
     };
     

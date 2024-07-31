@@ -225,8 +225,8 @@
 &gpu {
 	mali-supply = <&vdd_gpu_s0>;
 	mem-supply = <&vdd_gpu_mem_s0>;
-	upthreshold = <60>;
-	downdifferential = <30>;
+	//upthreshold = <60>;
+	//downdifferential = <30>;
 	status = "okay";
 };
 
@@ -282,6 +282,12 @@
 
 &hdptxphy_hdmi0 {
 	status = "okay";
+};
+
+&can2 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&can2m1_pins>;
+    status = "okay";
 };
 
 &hdptxphy0 {
@@ -399,7 +405,20 @@
 
 
 &i2c7 {
-	status = "disabled";
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c7m0_xfer>;
+
+	es8388: es8388@11 {
+			status = "okay";
+			#sound-dai-cells = <0>;
+			compatible = "everest,es8388", "everest,es8323";
+			reg = <0x11>;
+			clocks = <&cru I2S0_8CH_MCLKOUT>;
+			clock-names = "mclk";
+			pinctrl-names = "default";
+			pinctrl-0 = <&i2s0_mclk>;
+	};
 };
 
 &i2c8 {
@@ -753,10 +772,9 @@
 };
 
 &usbhost_dwc3_0 {
-    status = "disabled";
+	dr_mode = "host";
+	status = "okay";
 };
-
-
 
 &vdpu {
 	status = "okay";
@@ -813,4 +831,22 @@
 &display_subsystem {
 	clocks = <&hdptxphy_hdmi0>;
 	clock-names = "hdmi0_phy_pll";
+};
+
+&spi2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi2m2_cs0 &spi2m2_pins>;
+	num-cs = <1>;
+};
+
+&spi0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi0m3_cs0  &spi0m3_cs1 &spi0m3_pins>;
+	num-cs = <2>;
+	spi_test@0 {
+	compatible = "rockchip,spi_test_bus0_cs1";
+	reg = <0>;
+	spi-max-frequency = <5000000>;
+	};
 };
