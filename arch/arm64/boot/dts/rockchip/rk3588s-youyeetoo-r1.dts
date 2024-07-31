@@ -29,7 +29,7 @@
     vcc5v0_host_20: vcc5v0-host-20 {
         compatible = "regulator-fixed";
         enable-active-high;
-        gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
+        gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>; // GPIO pin for USB 2.0
         pinctrl-names = "default";
         pinctrl-0 = <&vcc5v0_host20_en>;
         regulator-name = "vcc5v0_host_20";
@@ -44,18 +44,20 @@
         regulator-min-microvolt = <5000000>;
         regulator-max-microvolt = <5000000>;
         enable-active-high;
-        gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
+        gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>; // GPIO pin for USB 3.0
         vin-supply = <&vcc5v0_usb>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&usb3_vbus_en>;
     };
 
-    usb30_power_ver1 {//1c7
+    usb30_power_ver1 {
         compatible = "lylx,xgpio";
         gpio = <&gpio4 7 GPIO_ACTIVE_HIGH>;
         def_val = <1>;
         status = "okay";
     };
 
-    usb30_power {//0 B0
+    usb30_power {
         compatible = "lylx,xgpio";
         gpio = <&gpio0 8 GPIO_ACTIVE_HIGH>;
         def_val = <1>;
@@ -73,6 +75,9 @@
     usb {
         vcc5v0_host20_en: vcc5v0-host20-en {
             rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+        usb3_vbus_en: usb3-vbus-en {
+            rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
         };
         vcc5v0_host_en: vcc5v0-host-en {
             rockchip,pins = <1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
@@ -101,7 +106,6 @@
 
 &u2phy2 {
     status = "okay";
-    #phy-cells = <0>;
 };
 
 &u2phy2_host {
@@ -109,42 +113,6 @@
     status = "okay";
 };
 
-&vp0 {
-    rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER0 | 1 << ROCKCHIP_VOP2_ESMART0 | 1 << ROCKCHIP_VOP2_CLUSTER1)>;
-    rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER0>;
-    cursor-win-id = <ROCKCHIP_VOP2_ESMART0>;
-};
-
-&vp1 {
-    rockchip,plane-mask = <(1 << ROCKCHIP_VOP2_CLUSTER2 | 1 << ROCKCHIP_VOP2_ESMART1 | 1 << ROCKCHIP_VOP2_ESMART2)>;
-    rockchip,primary-plane = <ROCKCHIP_VOP2_CLUSTER2>;
-    cursor-win-id = <ROCKCHIP_VOP2_ESMART1>;
-};
-
-&vp2 {
-    /delete-property/ rockchip,plane-mask;
-    /delete-property/ rockchip,primary-plane;
-    status = "disabled";
-};
-
-&vp3 {
-    /delete-property/ rockchip,plane-mask;
-    /delete-property/ rockchip,primary-plane;
-    status = "disabled";
-};
-
-// USB2 PHY node for USB3
-&u2phy2 {
-    status = "okay";
-    #phy-cells = <0>;
-};
-
-&u2phy2_host {
-    phy-supply = <&vcc5v0_host_20>;
-    status = "okay";
-};
-
-// USB3 Controller
 &usbdrd3_0 {
     dr_mode = "host";
     maximum-speed = "super-speed";
@@ -153,7 +121,6 @@
     status = "okay";
 };
 
-// Ensure USB 2.0 host is properly configured
 &usb_host0_ehci {
     dr_mode = "host";
     status = "okay";
