@@ -38,18 +38,6 @@
         vin-supply = <&vcc5v0_usb>;
     };
 
-    vbus5v0_usb3: vbus5v0-usb3 {
-        compatible = "regulator-fixed";
-        regulator-name = "vbus5v0_usb3";
-        regulator-min-microvolt = <5000000>;
-        regulator-max-microvolt = <5000000>;
-        enable-active-high;
-        gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>; // GPIO pin for USB 3.0
-        vin-supply = <&vcc5v0_usb>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&usb3_vbus_en>;
-    };
-
     usb30_power_ver1 {
         compatible = "lylx,xgpio";
         gpio = <&gpio4 7 GPIO_ACTIVE_HIGH>;
@@ -71,16 +59,10 @@
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
         };
     };
-
-    usb {
-        vcc5v0_host20_en: vcc5v0-host20-en {
-            rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
-        };
-        usb3_vbus_en: usb3-vbus-en {
-            rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
-        };
-        vcc5v0_host_en: vcc5v0-host-en {
-            rockchip,pins = <1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+    
+    hym8563 {
+        hym8563_int: hym8563-int {
+                rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
         };
     };
 };
@@ -98,47 +80,4 @@
         clock-output-names = "hym8563";
         status = "okay";
     };
-};
-
-&u2phy0 {
-    status = "okay";
-    #phy-cells = <0>;
-};
-
-&u2phy2 {
-    status = "okay";
-    #phy-cells = <0>;
-};
-
-&u2phy2_host {
-    phy-supply = <&vcc5v0_host_20>;
-    status = "okay";
-};
-
-&usbdrd3_0 {
-    dr_mode = "host";
-    maximum-speed = "super-speed";
-    phys = <&u2phy2>;
-    phy-names = "usb3-phy";
-    status = "okay";
-};
-
-&usb_host0_ehci {
-    dr_mode = "host";
-    status = "okay";
-};
-
-&usb_host0_ohci {
-    dr_mode = "host";
-    status = "okay";
-};
-
-&usb_host1_ehci {
-    dr_mode = "host";
-    status = "okay";
-};
-
-&usb_host1_ohci {
-    dr_mode = "host";
-    status = "okay";
 };
