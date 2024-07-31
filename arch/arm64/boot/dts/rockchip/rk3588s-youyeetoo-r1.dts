@@ -69,3 +69,30 @@
         status = "okay";
     };
 };
+
+&pwm7{
+     pinctrl-0 = <&pwm7m0_pins>;
+     status = "okay";
+};
+
+&pwm11 {
+    pinctrl-0 = <&pwm11m1_pins>;
+    pinctrl-names = "active";
+    status = "okay";
+};
+
+&pwm12 {
+     status = "okay";
+     pinctrl-names = "active";
+     pinctrl-0 = <&pwm12m1_pins>;
+};
+
+&backlight {
+     pwms = <&pwm12 0 25000 0>;
+     status = "okay";
+};
+&backlight1 {
+     pwms = <&pwm11 0 25000 0>;
+     status = "okay";
+};
+

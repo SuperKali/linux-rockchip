@@ -194,8 +194,8 @@
 	cec-enable = "true";
 };
 
-&hdmi0_in_vp0 {
-	status = "okay";
+&hdmi0_in_vp1 {
+        status = "okay";
 };
 
 &hdmi0_sound {
@@ -305,23 +305,18 @@
 };
 
 &i2c6 {
-    status = "okay";
-    pinctrl-names = "default";
-    pinctrl-0 = <&i2c6m0_xfer>;
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c6m3_xfer>;
 
-    hym8563: hym8563@51 {
-        compatible = "haoyu,hym8563";
-        reg = <0x51>;
-        #clock-cells = <0>;
-        clock-frequency = <32768>;
-        clock-output-names = "hym8563";
-        pinctrl-names = "default";
-        pinctrl-0 = <&rtc_int>;
-
-        interrupt-parent = <&gpio0>;
-        interrupts = <RK_PB0 IRQ_TYPE_LEVEL_LOW>;
-        wakeup-source;
-    };
+	hym8563: hym8563@51 {
+			compatible = "haoyu,hym8563";
+			reg = <0x51>;
+			#clock-cells = <0>;
+			clock-frequency = <32768>;
+			clock-output-names = "hym8563";
+			status = "okay";
+	};
 };
 
 
@@ -403,6 +398,11 @@
 };
 
 &pinctrl {
+	headphone {
+		hp_det: hp-det {
+            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
 	hym8563 {
 		rtc_int: rtc-int {
 			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
