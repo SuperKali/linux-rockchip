@@ -727,6 +727,14 @@
     #phy-cells = <0>;
 };
 
+&u2phy3 {
+	status = "okay";
+};
+
+&u2phy0_otg {
+	status = "okay";
+};
+
 &u2phy2_host {
     phy-supply = <&vcc5v0_host_20>;
     status = "okay";
@@ -743,6 +751,11 @@
     phys = <&u2phy3_host>;
     phy-names = "usb3-phy";
     status = "okay";
+};
+
+&usbdrd_dwc3_0 {
+	dr_mode = "peripheral";
+	status = "okay";
 };
 
 &usb_host0_ehci {
