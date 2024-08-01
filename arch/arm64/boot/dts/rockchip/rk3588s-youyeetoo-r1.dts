@@ -35,14 +35,14 @@
 
     usb30_power_ver1 {
         compatible = "lylx,xgpio";
-        gpio = <&GPIO4 RK_PA7 GPIO_ACTIVE_HIGH>;
+        gpio = <&gpio4 RK_PA7 GPIO_ACTIVE_HIGH>;
         def_val = <1>;
         status = "okay";
     };
 
     usb30_power {
         compatible = "lylx,xgpio";
-        gpio = <&GPIO0 RK_PB0 GPIO_ACTIVE_HIGH>;
+        gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
         def_val = <1>;
         status = "okay";
     };
