@@ -104,6 +104,18 @@
 		pinctrl-0 = <&vcc5v0_host_en>;
 	};
 
+	vcc5v0_host_30: vcc5v0-host-30 {
+		compatible = "regulator-fixed";
+		enable-active-high;
+		gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vcc5v0_host30_en>;
+		regulator-name = "vcc5v0_host_30";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		vin-supply = <&vcc5v0_usb>;
+	};
+
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		brightness-levels = <
@@ -716,7 +728,8 @@
 	status = "okay";
 };
 
-&u2phy0_otg {
+&u2phy1_otg {
+	phy-supply = <&vcc5v0_host_30>;
 	status = "okay";
 };
 
