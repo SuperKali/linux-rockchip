@@ -28,15 +28,18 @@
 		bootargs = "earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 coherent_pool=1m irqchip.gicv3_pseudo_nmi=0";
 	};
 
-	hdmi0_sound: hdmi0-sound {
+	/* HDMI */
+
+	/*hdmi0_sound: hdmi0-sound {
 		status = "disabled";
 		compatible = "rockchip,hdmi";
 		rockchip,mclk-fs = <128>;
 		rockchip,card-name = "rockchip-hdmi0";
 		rockchip,cpu = <&i2s5_8ch>;
 		rockchip,codec = <&hdmi0>;
-	};
+	}; */
 
+    /* POWER REGULATOR 12V DC-IN */
 	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_sys";
@@ -45,6 +48,8 @@
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 	};
+
+	/* POWER REGULATOR 5V (USB) */
 
 	vcc5v0_usb: vcc5v0-usb {
 		compatible = "regulator-fixed";
@@ -56,6 +61,7 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
+	/* POWER REGULATOR CPU? */
 	vcc_1v1_nldo_s3: vcc-1v1-nldo-s3 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_1v1_nldo_s3";
@@ -66,6 +72,7 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
+	/* POWE REGULATOR 3V (SD) */
 	vcc_3v3_sd_s0: vcc-3v3-sd-s0-regulator {
 		compatible = "regulator-fixed";
 		enable-active-high;
@@ -80,6 +87,8 @@
 		vin-supply = <&vcc_3v3_s3>;
 	};
 
+	/* POWER REGULATOR 3.3V (PCIE)*/
+
 	vcc_3v3_pcie20: vcc3v3-pcie20 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_3v3_pcie20";
@@ -90,6 +99,7 @@
 		vin-supply = <&vcc_3v3_s3>;
 	};
 
+	/* POWER REGULATOR 5V (USB2 & USB3)*/
     vcc5v0_host_20: vcc5v0-host-20 {
         compatible = "regulator-fixed";
         enable-active-high;
@@ -113,213 +123,9 @@
         regulator-max-microvolt = <5000000>;
         vin-supply = <&vcc5v0_usb>;
     };
-
-	backlight: backlight {
-		compatible = "pwm-backlight";
-		brightness-levels = <
-			  0  20  20  21  21  22  22  23
-			 23  24  24  25  25  26  26  27
-			 27  28  28  29  29  30  30  31
-			 31  32  32  33  33  34  34  35
-			 35  36  36  37  37  38  38  39
-			 40  41  42  43  44  45  46  47
-			 48  49  50  51  52  53  54  55
-			 56  57  58  59  60  61  62  63
-			 64  65  66  67  68  69  70  71
-			 72  73  74  75  76  77  78  79
-			 80  81  82  83  84  85  86  87
-			 88  89  90  91  92  93  94  95
-			 96  97  98  99 100 101 102 103
-			104 105 106 107 108 109 110 111
-			112 113 114 115 116 117 118 119
-			120 121 122 123 124 125 126 127
-			128 129 130 131 132 133 134 135
-			136 137 138 139 140 141 142 143
-			144 145 146 147 148 149 150 151
-			152 153 154 155 156 157 158 159
-			160 161 162 163 164 165 166 167
-			168 169 170 171 172 173 174 175
-			176 177 178 179 180 181 182 183
-			184 185 186 187 188 189 190 191
-			192 193 194 195 196 197 198 199
-			200 201 202 203 204 205 206 207
-			208 209 210 211 212 213 214 215
-			216 217 218 219 220 221 222 223
-			224 225 226 227 228 229 230 231
-			232 233 234 235 236 237 238 239
-			240 241 242 243 244 245 246 247
-			248 249 250 251 252 253 254 255
-		>;
-        default-brightness-level = <10>;
-	};
-
-	backlight1: backlight1 {
-			compatible = "pwm-backlight";
-			brightness-levels = <
-						0  20  20  21  21  22  22  23
-						23  24  24  25  25  26  26  27
-						27  28  28  29  29  30  30  31
-						31  32  32  33  33  34  34  35
-						35  36  36  37  37  38  38  39
-						40  41  42  43  44  45  46  47
-						48  49  50  51  52  53  54  55
-						56  57  58  59  60  61  62  63
-						64  65  66  67  68  69  70  71
-						72  73  74  75  76  77  78  79
-						80  81  82  83  84  85  86  87
-						88  89  90  91  92  93  94  95
-						96  97  98  99 100 101 102 103
-					104 105 106 107 108 109 110 111
-					112 113 114 115 116 117 118 119
-					120 121 122 123 124 125 126 127
-					128 129 130 131 132 133 134 135
-					136 137 138 139 140 141 142 143
-					144 145 146 147 148 149 150 151
-					152 153 154 155 156 157 158 159
-					160 161 162 163 164 165 166 167
-					168 169 170 171 172 173 174 175
-					176 177 178 179 180 181 182 183
-					184 185 186 187 188 189 190 191
-					192 193 194 195 196 197 198 199
-					200 201 202 203 204 205 206 207
-					208 209 210 211 212 213 214 215
-					216 217 218 219 220 221 222 223
-					224 225 226 227 228 229 230 231
-					232 233 234 235 236 237 238 239
-					240 241 242 243 244 245 246 247
-					248 249 250 251 252 253 254 255
-			>;
-			default-brightness-level = <100>;
-	};
-
-	test-power {
-		status = "okay";
-	};
 };
 
-&av1d {
-	status = "okay";
-};
-
-&av1d_mmu {
-	status = "okay";
-};
-
-&avsd {
-	status = "okay";
-};
-
-&combphy0_ps {
-	status = "okay";
-};
-
-&combphy2_psu {
-	status = "okay";
-};
-
-&cpu_l0 {
-	cpu-supply = <&vdd_cpu_lit_s0>;
-	mem-supply = <&vdd_cpu_lit_mem_s0>;
-};
-
-&cpu_b0 {
-	cpu-supply = <&vdd_cpu_big0_s0>;
-	mem-supply = <&vdd_cpu_big0_mem_s0>;
-};
-
-&cpu_b2 {
-	cpu-supply = <&vdd_cpu_big1_s0>;
-	mem-supply = <&vdd_cpu_big1_mem_s0>;
-};
-
-&gpu {
-	mali-supply = <&vdd_gpu_s0>;
-	mem-supply = <&vdd_gpu_mem_s0>;
-	//upthreshold = <60>;
-	//downdifferential = <30>;
-	status = "okay";
-};
-
-&gmac1 {
-	/* Use rgmii-rxid mode to disable rx delay inside Soc */
-	phy-mode = "rgmii-rxid";
-	clock_in_out = "output";
-
-	snps,no-vlhash;
-	snps,reset-gpio = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
-	snps,reset-active-low;
-	/* Reset time is 20ms, 100ms for rtl8211f */
-	snps,reset-delays-us = <0 20000 100000>;
-
-	pinctrl-names = "default";
-	pinctrl-0 = <&gmac1_miim
-		     &gmac1_tx_bus2
-		     &gmac1_rx_bus2
-		     &gmac1_rgmii_clk
-		     &gmac1_rgmii_bus>;
-
-	tx_delay = <0x42>;
-	/* rx_delay = <0x4f>; */
-
-	phy-handle = <&rgmii_phy1>;
-	status = "okay";
-};
-
-&mdio1 {
-	rgmii_phy1: phy@1 {
-		compatible = "ethernet-phy-ieee802.3-c22";
-		reg = <0x1>;
-	};
-};
-
-&i2s5_8ch {
-	status = "okay";
-};
-
-&hdmi0 {
-	enable-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
-	status = "okay";
-	cec-enable = "true";
-};
-
-&hdmi0_in_vp1 {
-        status = "okay";
-};
-
-&hdmi0_sound {
-	status = "okay";
-};
-
-&hdptxphy_hdmi0 {
-	status = "okay";
-};
-
-&can2 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&can2m1_pins>;
-    status = "okay";
-};
-
-&hdptxphy0 {
-	/* Single Vdiff Training Table for power reduction (optional) */
-	training-table = /bits/ 8 <
-		/* voltage swing 0, pre-emphasis 0->3 */
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		/* voltage swing 1, pre-emphasis 0->2 */
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		/* voltage swing 2, pre-emphasis 0->1 */
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		0x0d 0x00 0x00 0x00 0x00 0x00
-		/* voltage swing 3, pre-emphasis 0 */
-		0x0d 0x00 0x00 0x00 0x00 0x00
-	>;
-	status = "disabled";
-};
+/* I2C */
 
 &i2c0 {
 	status = "okay";
@@ -435,6 +241,53 @@
 	status = "disabled";
 };
 
+/* CPU */
+
+&cpu_l0 {
+	cpu-supply = <&vdd_cpu_lit_s0>;
+	mem-supply = <&vdd_cpu_lit_mem_s0>;
+};
+
+&cpu_b0 {
+	cpu-supply = <&vdd_cpu_big0_s0>;
+	mem-supply = <&vdd_cpu_big0_mem_s0>;
+};
+
+&cpu_b2 {
+	cpu-supply = <&vdd_cpu_big1_s0>;
+	mem-supply = <&vdd_cpu_big1_mem_s0>;
+};
+
+/* GPU */
+
+&gpu {
+	mali-supply = <&vdd_gpu_s0>;
+	mem-supply = <&vdd_gpu_mem_s0>;
+	status = "okay";
+};
+
+/* NPU */
+
+&rknpu {
+	rknpu-supply = <&vdd_npu_s0>;
+	mem-supply = <&vdd_npu_mem_s0>;
+	status = "okay";
+};
+
+&dfi {
+	status = "okay";
+};
+
+&dmc {
+	status = "okay";
+	center-supply = <&vdd_ddr_s0>;
+	mem-supply = <&vdd_log_s0>;
+};
+
+&rknpu_mmu {
+	status = "okay";
+};
+
 &iep {
 	status = "okay";
 };
@@ -491,78 +344,6 @@
 	status = "okay";
 };
 
-&pcie2x1l1 {
-	reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
-	rockchip,init-delay-ms = <100>;
-	vpcie3v3-supply = <&vcc_3v3_pcie20>;
-	status = "okay";
-};
-
-&pcie2x1l2 {
-	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
-	vpcie3v3-supply = <&vcc_3v3_pcie20>;
-	status = "okay";
-};
-
-&pinctrl {
-	headphone {
-		hp_det: hp-det {
-            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-	hym8563 {
-		rtc_int: rtc-int {
-			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
-
-	sdmmc {
-		sd_s0_pwr: sd-s0-pwr {
-			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
-	
-    usb {
-        vcc5v0_host20_en: vcc5v0-host20-en {
-            rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
-        };
-        vcc5v0_host30_en: vcc5v0-host30-en {
-            rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
-        };
-    };
-};
-
-&pwm3 {
-	compatible = "rockchip,remotectl-pwm";
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwm3m0_pins>;
-	remote_pwm_id = <3>;
-	handle_cpu_id = <1>;
-	remote_support_psci = <0>;
-	status = "okay";
-
-	ir_key1 {
-		rockchip,usercode = <0xc43b>;
-		/* /system/usr/keylayout/Generic.kl */
-		rockchip,key_table =
-			<0xff	KEY_POWER>,
-			<0xef	KEY_LEFT>,
-			<0xed	KEY_RIGHT>,
-			<0xf2	KEY_UP>,
-			<0xea	KEY_DOWN>,
-			<0xee	KEY_ENTER>,
-			<0xe9	KEY_MUTE>,
-			<0xf1	KEY_VOLUMEDOWN>,
-			<0xf3	KEY_VOLUMEUP>,
-			<0xae	KEY_MENU>,
-			<0xeb	KEY_LEFTMETA>,
-			<0xaf	KEY_BACK>,
-			<0xf7	KEY_MODE>,
-			<0xe5	KEY_SYSRQ>,
-			<0xf5	KEY_ESC>;
-	};
-};
-
 &rga3_core0 {
 	status = "okay";
 };
@@ -580,16 +361,6 @@
 };
 
 &rga2 {
-	status = "okay";
-};
-
-&rknpu {
-	rknpu-supply = <&vdd_npu_s0>;
-	mem-supply = <&vdd_npu_mem_s0>;
-	status = "okay";
-};
-
-&rknpu_mmu {
 	status = "okay";
 };
 
@@ -637,6 +408,87 @@
 	status = "okay";
 };
 
+&av1d {
+	status = "okay";
+};
+
+&av1d_mmu {
+	status = "okay";
+};
+
+&saradc {
+	status = "okay";
+	vref-supply = <&avcc_1v8_s0>;
+};
+
+/* HDMI */
+
+&hdmi0 {
+	enable-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+	cec-enable = "true";
+};
+
+&hdmi0_in_vp0 {
+    status = "okay";
+};
+
+&route_hdmi0 {
+	status = "okay";
+	connect = <&vp0_out_hdmi0>;
+};
+
+/*&hdmi0_sound {
+	status = "okay";
+};*/
+
+&hdptxphy_hdmi0 {
+	status = "okay";
+};
+
+&i2s5_8ch {
+	status = "okay";
+};
+
+/* VARIOUS */
+
+&can2 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&can2m1_pins>;
+    status = "okay";
+};
+
+&pwm3 {
+	compatible = "rockchip,remotectl-pwm";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwm3m0_pins>;
+	remote_pwm_id = <3>;
+	handle_cpu_id = <1>;
+	remote_support_psci = <0>;
+	status = "okay";
+
+	ir_key1 {
+		rockchip,usercode = <0xc43b>;
+		/* /system/usr/keylayout/Generic.kl */
+		rockchip,key_table =
+			<0xff	KEY_POWER>,
+			<0xef	KEY_LEFT>,
+			<0xed	KEY_RIGHT>,
+			<0xf2	KEY_UP>,
+			<0xea	KEY_DOWN>,
+			<0xee	KEY_ENTER>,
+			<0xe9	KEY_MUTE>,
+			<0xf1	KEY_VOLUMEDOWN>,
+			<0xf3	KEY_VOLUMEUP>,
+			<0xae	KEY_MENU>,
+			<0xeb	KEY_LEFTMETA>,
+			<0xaf	KEY_BACK>,
+			<0xf7	KEY_MODE>,
+			<0xe5	KEY_SYSRQ>,
+			<0xf5	KEY_ESC>;
+	};
+};
+
 &avcc_1v8_s0 {
 	regulator-state-mem {
 		regulator-on-in-suspend;
@@ -667,23 +519,8 @@
 	>;
 };
 
-&route_hdmi0 {
-	status = "okay";
-	connect = <&vp0_out_hdmi0>;
-};
-
-&rng {
-	status = "okay";
-};
-
-&crypto {
-	status = "okay";
-};
-
-&saradc {
-	status = "okay";
-	vref-supply = <&avcc_1v8_s0>;
-};
+/* Storage */
+/* eMMC */
 
 &sdhci {
 	bus-width = <8>;
@@ -696,6 +533,8 @@
 	full-pwr-cycle-in-suspend;
 	status = "okay";
 };
+
+/* SD */
 
 &sdmmc {
 	max-frequency = <200000000>;
@@ -713,9 +552,7 @@
 	status = "okay";
 };
 
-&tsadc {
-	status = "okay";
-};
+/* USB 2.0 */
 
 &u2phy0 {
     status = "okay";
@@ -744,6 +581,8 @@
     phy-supply = <&vcc5v0_host_30>;
     status = "okay";
 };
+
+/* USB 3.0 */
 
 &usbdrd3_0 {
     dr_mode = "host";
@@ -778,17 +617,71 @@
     status = "okay";
 };
 
-&vdpu {
+/* PCIe */
+
+&combphy0_ps {
 	status = "okay";
 };
 
-&vdpu_mmu {
+&combphy2_psu {
 	status = "okay";
 };
 
-&vepu {
-        status = "okay";
+&pcie2x1l1 {
+	reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
+	rockchip,init-delay-ms = <100>;
+	vpcie3v3-supply = <&vcc_3v3_pcie20>;
+	status = "okay";
 };
+
+&pcie2x1l2 {
+	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
+	vpcie3v3-supply = <&vcc_3v3_pcie20>;
+	status = "okay";
+};
+
+/* ADC */
+
+&tsadc {
+	status = "okay";
+};
+
+/* Ethernet */
+
+&mdio1 {
+	rgmii_phy1: phy@1 {
+		compatible = "ethernet-phy-ieee802.3-c22";
+		reg = <0x1>;
+	};
+};
+
+&gmac1 {
+	/* Use rgmii-rxid mode to disable rx delay inside Soc */
+	phy-mode = "rgmii-rxid";
+	clock_in_out = "output";
+
+	snps,no-vlhash;
+	snps,reset-gpio = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
+	snps,reset-active-low;
+	/* Reset time is 20ms, 100ms for rtl8211f */
+	snps,reset-delays-us = <0 20000 100000>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&gmac1_miim
+		     &gmac1_tx_bus2
+		     &gmac1_rx_bus2
+		     &gmac1_rgmii_clk
+		     &gmac1_rgmii_bus>;
+
+	tx_delay = <0x42>;
+	/* rx_delay = <0x4f>; */
+
+	phy-handle = <&rgmii_phy1>;
+	status = "okay";
+};
+
+
+/* Video Ports */
 
 &vop {
 	assigned-clocks = <&cru ACLK_VOP>;
@@ -798,6 +691,10 @@
 };
 
 &vop_mmu {
+	status = "okay";
+};
+
+&vepu {
 	status = "okay";
 };
 
@@ -851,4 +748,54 @@
 	reg = <0>;
 	spi-max-frequency = <5000000>;
 	};
+};
+
+&pinctrl {
+	headphone {
+		hp_det: hp-det {
+            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+	hym8563 {
+		rtc_int: rtc-int {
+			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
+	sdmmc {
+		sd_s0_pwr: sd-s0-pwr {
+			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+	
+    usb {
+        vcc5v0_host20_en: vcc5v0-host20-en {
+            rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+        vcc5v0_host30_en: vcc5v0-host30-en {
+            rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+
+	gpio-key {
+        key1_pin: key1-pin {
+            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
+
+    xgpio {
+        gpio_4g:gpio-4g{
+                rockchip,pins =
+                        <0 23  RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
+                        //<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
+                        <4 7  RK_FUNC_GPIO &pcfg_pull_up>,
+                        <0 8  RK_FUNC_GPIO &pcfg_pull_up>;
+                        //<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
+                        //<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
+    };
 };

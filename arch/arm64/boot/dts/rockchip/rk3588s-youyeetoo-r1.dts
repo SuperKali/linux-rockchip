@@ -48,51 +48,6 @@
     };
 };
 
-&pinctrl {
-    gpio-key {
-        key1_pin: key1-pin {
-            rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
-        };
-    };
-
-    xgpio{
-        gpio_4g:gpio-4g{
-                rockchip,pins =
-                        <0 23  RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
-                        <4 7  RK_FUNC_GPIO &pcfg_pull_up>,
-                        <0 8  RK_FUNC_GPIO &pcfg_pull_up>;
-                        //<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
-                        //<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
-        };
-    };
-    
-    hym8563 {
-        hym8563_int: hym8563-int {
-                rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
-        };
-    };
-};
-
-&i2c6 {
-    status = "okay";
-    pinctrl-names = "default";
-    pinctrl-0 = <&i2c6m3_xfer>;
-
-    hym8563: hym8563@51 {
-        compatible = "haoyu,hym8563";
-        reg = <0x51>;
-        #clock-cells = <0>;
-        clock-frequency = <32768>;
-        clock-output-names = "hym8563";
-        status = "okay";
-    };
-};
-
 &pwm7{
      pinctrl-0 = <&pwm7m0_pins>;
      status = "okay";
@@ -109,13 +64,3 @@
      pinctrl-names = "active";
      pinctrl-0 = <&pwm12m1_pins>;
 };
-
-&backlight {
-     pwms = <&pwm12 0 25000 0>;
-     status = "okay";
-};
-&backlight1 {
-     pwms = <&pwm11 0 25000 0>;
-     status = "okay";
-};
-
