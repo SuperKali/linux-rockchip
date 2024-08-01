@@ -26,6 +26,8 @@
         };
     };
 
+    /* AUDIO */
+
     es8388_sound: es8388-sound {
         status = "okay";
         compatible = "rockchip,multicodecs-card";
@@ -35,8 +37,6 @@
         io-channel-names = "adc-detect";
         keyup-threshold-microvolt = <1800000>;
         poll-interval = <100>;
-        //spk-con-gpio = <&gpio4 RK_PA5 GPIO_ACTIVE_HIGH>;
-        //hp-con-gpio = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
         rockchip,format = "i2s";
         rockchip,mclk-fs = <256>;
         rockchip,cpu = <&i2s0_8ch>;
