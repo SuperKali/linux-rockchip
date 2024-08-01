@@ -728,7 +728,7 @@
 	status = "okay";
 };
 
-&u2phy1_otg {
+&u2phy0_otg {
 	phy-supply = <&vcc5v0_host_30>;
 	status = "okay";
 };
