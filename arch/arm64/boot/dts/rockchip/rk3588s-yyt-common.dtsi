@@ -90,31 +90,29 @@
 		vin-supply = <&vcc_3v3_s3>;
 	};
 
-	vcc5v0_host: vcc5v0-host {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc5v0_host";
-		regulator-boot-on;
-		regulator-always-on;
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-		enable-active-high;
-		gpio = <&gpio1 RK_PB1 GPIO_ACTIVE_HIGH>;
-		vin-supply = <&vcc5v0_usb>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&vcc5v0_host_en>;
-	};
+    vcc5v0_host_20: vcc5v0-host-20 {
+        compatible = "regulator-fixed";
+        enable-active-high;
+        gpio = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&vcc5v0_host20_en>;
+        regulator-name = "vcc5v0_host_20";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        vin-supply = <&vcc5v0_usb>;
+    };
 
-	vcc5v0_host_30: vcc5v0-host-30 {
-		compatible = "regulator-fixed";
-		enable-active-high;
-		gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_HIGH>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&vcc5v0_host30_en>;
-		regulator-name = "vcc5v0_host_30";
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-		vin-supply = <&vcc5v0_usb>;
-	};
+    vcc5v0_host_30: vcc5v0-host-30 {
+        compatible = "regulator-fixed";
+        enable-active-high;
+        gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&vcc5v0_host30_en>;
+        regulator-name = "vcc5v0_host_30";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        vin-supply = <&vcc5v0_usb>;
+    };
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
@@ -524,13 +522,13 @@
 		};
 	};
 	
-	usb {
-        vcc5v0_host_en: vcc5v0-host-en {
-            rockchip,pins = <1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+    usb {
+        vcc5v0_host20_en: vcc5v0-host20-en {
+            rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
         };
-		vcc5v0_host30_en: vcc5v0-host30-en {
-			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
+        vcc5v0_host30_en: vcc5v0-host30-en {
+            rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
     };
 };
 
@@ -721,75 +719,50 @@
 
 &u2phy0 {
     status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2 {
-	status = "okay";
-};
-
-&u2phy3 {
-	status = "okay";
-};
-
-&u2phy0_otg {
-	phy-supply = <&vcc5v0_host_30>;
-	status = "okay";
+    status = "okay";
+    #phy-cells = <0>;
 };
 
 &u2phy2_host {
-	phy-supply = <&vcc5v0_host>;
-	status = "okay";
+    phy-supply = <&vcc5v0_host_20>;
+    status = "okay";
 };
 
 &u2phy3_host {
-	phy-supply = <&vcc5v0_host>;
-	status = "okay";
-};
-
-&usb_host0_ehci {
-	status = "okay";
-};
-
-&usb_host0_ohci {
-	status = "okay";
-};
-
-&usb_host1_ehci {
-	status = "okay";
-};
-
-&usb_host1_ohci {
-	status = "okay";
-};
-
-&usbdp_phy0 {
-	status = "okay";
-};
-
-&usbdp_phy0_dp {
-	status = "okay";
-};
-
-&usbdp_phy0_u3 {
-	status = "okay";
+    phy-supply = <&vcc5v0_host_30>;
+    status = "okay";
 };
 
 &usbdrd3_0 {
-	status = "okay";
+    dr_mode = "host";
+    maximum-speed = "super-speed";
+    phys = <&u2phy3_host>;
+    phy-names = "usb3-phy";
+    status = "okay";
 };
 
-&usbdrd_dwc3_0 {
-    dr_mode = "peripheral";
-	status = "okay";
+&usb_host0_ehci {
+    dr_mode = "host";
+    status = "okay";
 };
 
-&usbhost3_0 {
-    status = "disabled";
+&usb_host0_ohci {
+    dr_mode = "host";
+    status = "okay";
 };
 
-&usbhost_dwc3_0 {
-	dr_mode = "host";
-	status = "okay";
+&usb_host1_ehci {
+    dr_mode = "host";
+    status = "okay";
+};
+
+&usb_host1_ohci {
+    dr_mode = "host";
+    status = "okay";
 };
 
 &vdpu {
