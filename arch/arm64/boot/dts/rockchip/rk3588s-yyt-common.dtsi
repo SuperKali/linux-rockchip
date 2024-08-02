@@ -252,6 +252,8 @@
 			reg = <0x11>;
 			clocks = <&cru I2S0_8CH_MCLKOUT>;
 			clock-names = "mclk";
+			assigned-clocks = <&mclkout_i2s0>;
+			assigned-clock-rates = <12288000>;
 			pinctrl-names = "default";
 			pinctrl-0 = <&i2s0_mclk>;
 	};
