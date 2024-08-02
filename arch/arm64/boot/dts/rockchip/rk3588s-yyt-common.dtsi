@@ -28,17 +28,6 @@
 		bootargs = "earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 coherent_pool=1m irqchip.gicv3_pseudo_nmi=0";
 	};
 
-	/* HDMI */
-
-	/*hdmi0_sound: hdmi0-sound {
-		status = "disabled";
-		compatible = "rockchip,hdmi";
-		rockchip,mclk-fs = <128>;
-		rockchip,card-name = "rockchip-hdmi0";
-		rockchip,cpu = <&i2s5_8ch>;
-		rockchip,codec = <&hdmi0>;
-	}; */
-
     /* POWER REGULATOR 12V DC-IN */
 	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
@@ -115,7 +104,7 @@
     vcc5v0_host_30: vcc5v0-host-30 {
         compatible = "regulator-fixed";
         enable-active-high;
-        gpio = <&gpio4 RK_PA7 GPIO_ACTIVE_HIGH>;
+        gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
         pinctrl-names = "default";
         pinctrl-0 = <&vcc5v0_host30_en>;
         regulator-name = "vcc5v0_host_30";
@@ -438,9 +427,9 @@
 	connect = <&vp0_out_hdmi0>;
 };
 
-/*&hdmi0_sound {
+&hdmi0_sound {
 	status = "okay";
-};*/
+};
 
 &hdptxphy_hdmi0 {
 	status = "okay";

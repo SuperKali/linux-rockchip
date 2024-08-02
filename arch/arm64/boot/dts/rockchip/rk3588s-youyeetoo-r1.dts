@@ -12,20 +12,6 @@
     model = "Youyeetoo R1";
     compatible = "youyeetoo,r1", "rockchip,rk3588";
 
-    gpio_keys: gpio-keys {
-        compatible = "gpio-keys";
-        pinctrl-names = "default";
-        pinctrl-0 = <&key1_pin>;
-
-        button@1 {
-            debounce-interval = <50>;
-            gpios = <&gpio1 RK_PC0 GPIO_ACTIVE_LOW>;
-            label = "K1";
-            linux,code = <BTN_1>;
-            wakeup-source;
-        };
-    };
-
     /* AUDIO */
 
     es8388_sound: es8388-sound {
