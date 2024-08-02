@@ -128,6 +128,21 @@
         regulator-max-microvolt = <5000000>;
         vin-supply = <&vcc5v0_usb>;
     };
+
+	/* LED GREEN BEAT */
+	leds: gpio-leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 =<&leds_gpio>;
+		status = "okay";
+
+		led@1 {
+			gpios = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
+			label = "status_led";
+			linux,default-trigger = "heartbeat";
+			linux,default-trigger-delay-ms = <0>;
+		};
+	};
 };
 
 /* I2C */
@@ -786,6 +801,9 @@
         key1_pin: key1-pin {
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
         };
+		leds_gpio: leds-gpio {
+			rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
     };
 
     xgpio {
