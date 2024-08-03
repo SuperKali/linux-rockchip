@@ -812,6 +812,22 @@
         };
     };
 
+	lcd {
+		lcd_rst_gpio: lcd-rst-gpio {
+		rockchip,pins = <1 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>,
+						<1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+	
+	touch {
+		touch_gpio: touch-gpio {
+			rockchip,pins =
+				<4 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,
+				<1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,
+				<1 RK_PB3 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
 	gpio-key {
         key1_pin: key1-pin {
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
