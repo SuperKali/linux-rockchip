@@ -1,6 +1,6 @@
 
 #define DSI0_LCD  1
-#define DSI1_LCD  0
+#define DSI1_LCD  1
 
 #if DSI0_LCD
 &dsi0 {
