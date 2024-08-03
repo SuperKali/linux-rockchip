@@ -19,6 +19,7 @@
 
 / {
 	aliases {
+		ethernet0 = &gmac1;
 		mmc0 = &sdhci;
 		mmc1 = &sdmmc;
 		mmc2 = &sdio;
@@ -676,11 +677,10 @@
 };
 
 &gmac1 {
-	/* Use rgmii-rxid mode to disable rx delay inside Soc */
+	status = "okay";
 	phy-mode = "rgmii-rxid";
 	clock_in_out = "output";
 
-	snps,no-vlhash;
 	snps,reset-gpio = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
 	snps,reset-active-low;
 	/* Reset time is 20ms, 100ms for rtl8211f */
@@ -693,11 +693,10 @@
 		     &gmac1_rgmii_clk
 		     &gmac1_rgmii_bus>;
 
-	tx_delay = <0x42>;
-	/* rx_delay = <0x4f>; */
+	rx_delay = <0x00>;
+	tx_delay = <0x43>;
 
 	phy-handle = <&rgmii_phy1>;
-	status = "okay";
 };
 
 
