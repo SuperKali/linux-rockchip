@@ -30,6 +30,7 @@
 	};
 
 	/* HDMI SOUND */
+
 	hdmi0_sound: hdmi0-sound {
 		status = "disabled";
 		compatible = "simple-audio-card";
@@ -46,6 +47,7 @@
 	};
 
     /* POWER REGULATOR 12V DC-IN */
+
 	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_sys";
@@ -68,6 +70,7 @@
 	};
 
 	/* POWER REGULATOR CPU? */
+
 	vcc_1v1_nldo_s3: vcc-1v1-nldo-s3 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_1v1_nldo_s3";
@@ -78,7 +81,8 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
-	/* POWE REGULATOR 3V (SD) */
+	/* POWER REGULATOR 3V (SD) */
+
 	vcc_3v3_sd_s0: vcc-3v3-sd-s0-regulator {
 		compatible = "regulator-fixed";
 		enable-active-high;
@@ -106,6 +110,7 @@
 	};
 
 	/* POWER REGULATOR 5V (USB2 & USB3)*/
+
     vcc5v0_host_20: vcc5v0-host-20 {
         compatible = "regulator-fixed";
         enable-active-high;
@@ -129,6 +134,17 @@
         regulator-max-microvolt = <5000000>;
         vin-supply = <&vcc5v0_usb>;
     };
+
+	/* POWER REGULATOR LCD DSI0 */
+
+	vcc3v3_lcd_n: vcc3v3-lcd0-n {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc3v3_lcd0_n";
+		regulator-boot-on;
+		enable-active-high;
+		gpio = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc_3v3_s0>;
+	};
 
 	/* LED GREEN BEAT */
 	leds: gpio-leds {
