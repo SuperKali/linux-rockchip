@@ -266,7 +266,7 @@
 		status = "okay";
 		#sound-dai-cells = <0>;
 		compatible = "everest,es8388", "everest,es8323";
-		reg = <0x10>;
+		reg = <0x11>;
 		clocks = <&mclkout_i2s0>;
 		clock-names = "mclk";
 		assigned-clocks = <&mclkout_i2s0>;
