@@ -266,9 +266,11 @@
 		status = "okay";
 		#sound-dai-cells = <0>;
 		compatible = "everest,es8388", "everest,es8323";
-		reg = <0x11>;
-		clocks = <&cru I2S0_8CH_MCLKOUT>;
+		reg = <0x10>;
+		clocks = <&mclkout_i2s0>;
 		clock-names = "mclk";
+		assigned-clocks = <&mclkout_i2s0>;
+		assigned-clock-rates = <12288000>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&i2s0_mclk>;
 	};

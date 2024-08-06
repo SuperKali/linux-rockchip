@@ -94,7 +94,7 @@
 };
 
 &dsi0_in_vp3 {
-    status = "disalbed";
+    status = "disabled";
 };
 
 &dsi0_panel {
