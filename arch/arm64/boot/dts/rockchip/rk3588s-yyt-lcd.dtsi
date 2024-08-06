@@ -1,3 +1,10 @@
+/*
+* Youyeetoo R1 V3 - RK3588S
+* LCD DSI0 & LCD DSI1
+* For some reason, pin cannot be reuse, so you've to compile it with DSI1_LCD/DSI0_LCD defined
+* Currently Enabled: DSI0_LCD
+*/
+
 #define DSI0_LCD  1
 #define DSI1_LCD  0
 

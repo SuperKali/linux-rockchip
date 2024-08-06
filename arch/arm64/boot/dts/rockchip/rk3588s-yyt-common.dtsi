@@ -135,7 +135,7 @@
         vin-supply = <&vcc5v0_usb>;
     };
 
-	/* POWER REGULATOR LCD DSI0 */
+	/* POWER REGULATOR LCD DSI0/DSI1 */
 
 	vcc3v3_lcd_n: vcc3v3-lcd0-n {
 		compatible = "regulator-fixed";
@@ -146,7 +146,7 @@
 		vin-supply = <&vcc_3v3_s0>;
 	};
 
-	/* LED GREEN BEAT */
+	/* LED GREEN SYS */
 	leds: gpio-leds {
 		compatible = "gpio-leds";
 		pinctrl-names = "default";
@@ -769,11 +769,7 @@
 	clock-names = "hdmi0_phy_pll";
 };
 
-&spi2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&spi2m2_cs0 &spi2m2_pins>;
-	num-cs = <1>;
-};
+/* SPI */
 
 &spi0 {
 	status = "okay";
@@ -787,7 +783,29 @@
 	};
 };
 
+
+&spi2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi2m2_cs0 &spi2m2_pins>;
+	num-cs = <1>;
+};
+
+/* UART */
+
+&uart7 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart7m1_xfer>;
+};
+
+&uart5 {
+        status = "okay";
+        pinctrl-names = "default";
+        pinctrl-0 = <&uart5m1_xfer >;
+};
+
 &pinctrl {
+	/* HEADPHONE */
 	headphone {
 		hp_det: hp-det {
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
@@ -798,13 +816,13 @@
 			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
 		};
 	};
-
+    /* SD */
 	sdmmc {
 		sd_s0_pwr: sd-s0-pwr {
 			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
 		};
 	};
-	
+	/* USB */
     usb {
         vcc5v0_host20_en: vcc5v0-host20-en {
             rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
@@ -813,14 +831,14 @@
             rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
         };
     };
-
+    /* LCD */
 	lcd {
 		lcd_rst_gpio: lcd-rst-gpio {
 		rockchip,pins = <1 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>,
 						<1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
-	
+	/* TOUCHSCREEN */
 	touch {
 		touch_gpio: touch-gpio {
 			rockchip,pins =
@@ -829,7 +847,7 @@
 				<1 RK_PB3 RK_FUNC_GPIO &pcfg_pull_up>;
 		};
 	};
-
+    /* GPIO KEYS */
 	gpio-key {
         key1_pin: key1-pin {
             rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
@@ -842,16 +860,16 @@
     xgpio {
         gpio_4g:gpio-4g{
                 rockchip,pins =
-                        <0 23  RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
-                        //<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
-                        <4 7  RK_FUNC_GPIO &pcfg_pull_up>,
-                        <0 8  RK_FUNC_GPIO &pcfg_pull_up>;
-                        //<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
-                        //<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
+					<0 23  RK_FUNC_GPIO &pcfg_pull_up>,
+					//<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
+					//<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
+					//<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
+					//<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
+					//<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
+					<4 7  RK_FUNC_GPIO &pcfg_pull_up>,
+					<0 8  RK_FUNC_GPIO &pcfg_pull_up>;
+					//<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
+					//<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
         };
     };
 };
