@@ -136,6 +136,14 @@
         gpios = <&gpio0 RK_PC7 GPIO_ACTIVE_HIGH>;  /* Using GPIO0_C7 */
         #cooling-cells = <2>;
         cooling-levels = <0 50 100 150 200 255>;
+        speed-map = <
+            0 0
+            1 50
+            2 100
+            3 150
+            4 200
+            5 255
+        >;
         rockchip,temp-trips = <
             50000    1
             55000    2
@@ -143,6 +151,7 @@
             65000    4
             70000    5
         >;
+        status = "okay";
     };
 
     usb30_power_ver1 {
