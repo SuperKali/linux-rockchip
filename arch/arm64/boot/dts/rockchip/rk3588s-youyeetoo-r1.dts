@@ -136,7 +136,7 @@
         gpios = <&gpio0 RK_PC7 GPIO_ACTIVE_HIGH>;  /* Using GPIO0_C7 */
         #cooling-cells = <2>;
         cooling-levels = <0 50 100 150 200 255>;
-        speed-map = <
+        gpio-fan,speed-map = <
             0 0
             1 50
             2 100
