@@ -69,7 +69,7 @@
 		vin-supply = <&vcc12v_dcin>;
 	};
 
-	/* POWER REGULATOR CPU? */
+	/* POWER REGULATOR CPU */
 
 	vcc_1v1_nldo_s3: vcc-1v1-nldo-s3 {
 		compatible = "regulator-fixed";
@@ -109,7 +109,7 @@
 		vin-supply = <&vcc_3v3_s3>;
 	};
 
-	/* POWER REGULATOR 5V (USB) */
+	/* POWER REGULATOR 5V (USB2 & USB3) */
 
 	vcc5v0_usb: vcc5v0-usb {
 		compatible = "regulator-fixed";
@@ -120,8 +120,8 @@
 		regulator-max-microvolt = <5000000>;
 		vin-supply = <&vcc5v0_sys>;
 	};
-	
-	vcc5v0_host_20: vcc5v0-host-20 { // U13 (USB 2.0)
+
+    vcc5v0_host_20: vcc5v0-host-20 { // U13 (USB 2.0)
         compatible = "regulator-fixed";
         enable-active-high;
         gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
@@ -133,17 +133,17 @@
         vin-supply = <&vcc5v0_usb>;
     };
 
-	vbus5v0_host_30: vbus5v0-host-30 { // U12 (USB 3.0/TYPE-C)
-		compatible = "regulator-fixed";
-		regulator-name = "vbus5v0_host_30";
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-		enable-active-high;
-		gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
-		vin-supply = <&vcc5v0_usb>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&vcc5v0_host30_en>;
-	};
+    vcc5v0_host_30: vcc5v0-host-30 { // U12 (USB 3.0)
+        compatible = "regulator-fixed";
+        enable-active-high;
+        gpio = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&vcc5v0_host30_en>;
+        regulator-name = "vcc5v0_host_30";
+        regulator-min-microvolt = <5000000>;
+        regulator-max-microvolt = <5000000>;
+        vin-supply = <&vcc5v0_usb>;
+    };
 
 	/* POWER REGULATOR LCD DSI0/DSI1 */
 
@@ -252,84 +252,19 @@
 };
 
 &i2c6 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c6m3_xfer>;
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&i2c6m3_xfer>;
+
     /* RTC */
-	hym8563: hym8563@51 {
-			compatible = "haoyu,hym8563";
-			reg = <0x51>;
-			#clock-cells = <0>;
-			clock-frequency = <32768>;
-			clock-output-names = "hym8563";
-			status = "okay";
-	};
-
-	usbc0: fusb302@22 {
-                compatible = "fcs,fusb302";
-                reg = <0x22>;
-                interrupt-parent = <&gpio0>;
-                interrupts = <RK_PC4 IRQ_TYPE_LEVEL_LOW>;
-                pinctrl-names = "default";
-                pinctrl-0 = <&vcc5v0_host20_en>;
-                vbus-supply = <&vbus5v0_host_30>;
-                status = "okay";
-
-                ports {
-                        #address-cells = <1>;
-                        #size-cells = <0>;
-
-                        port@0 {
-                                reg = <0>;
-                                usbc0_role_sw: endpoint@0 {
-                                        remote-endpoint = <&dwc3_0_role_switch>;
-                                };
-                        };
-                };
-
-                usb_con: connector {
-                        compatible = "usb-c-connector";
-                        label = "USB-C";
-                        data-role = "dual";
-                        power-role = "dual";
-                        try-power-role = "sink";
-                        op-sink-microwatt = <1000000>;
-                        sink-pdos =
-                                <PDO_FIXED(5000, 1000, PDO_FIXED_USB_COMM)>;
-                        source-pdos =
-                                <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
-
-                        altmodes {
-                                #address-cells = <1>;
-                                #size-cells = <0>;
-
-                                altmode@0 {
-                                        reg = <0>;
-                                        svid = <0xff01>;
-                                        vdo = <0xffffffff>;
-                                };
-                        };
-
-                        ports {
-                                #address-cells = <1>;
-                                #size-cells = <0>;
-
-                                port@0 {
-                                        reg = <0>;
-                                        usbc0_orien_sw: endpoint {
-                                                remote-endpoint = <&usbdp_phy0_orientation_switch>;
-                                        };
-                                };
-
-                                port@1 {
-                                        reg = <1>;
-                                        dp_altmode_mux: endpoint {
-                                                remote-endpoint = <&usbdp_phy0_dp_altmode_mux>;
-                                        };
-                                };
-                        };
-                };
-        };
+    hym8563: hym8563@51 {
+        compatible = "haoyu,hym8563";
+        reg = <0x51>;
+        #clock-cells = <0>;
+        clock-frequency = <32768>;
+        clock-output-names = "hym8563";
+        status = "okay";
+    };
 };
 
 
@@ -561,6 +496,10 @@
 	status = "okay";
 };
 
+&hdmi0_in_vp1 {
+	status = "okay";
+};
+
 &i2s5_8ch {
 	status = "okay";
 };
@@ -667,15 +606,14 @@
 	status = "okay";
 };
 
-/* USB 2.0: PHY, OTG, EHCI/OHCI */
+/* USB 2.0 / USB 3.0 */
+
 &u2phy0 {
-	phy-supply = <&vcc5v0_usb>;
-    vbus-supply = <&vcc5v0_usb>;
-	status = "okay";
+    status = "okay";
 };
 
 &u2phy2 {
-	status = "okay";
+    status = "okay";
 };
 
 &u2phy3 {
@@ -683,16 +621,28 @@
 };
 
 &u2phy0_otg {
-	rockchip,typec-vbus-det;
+	phy-supply = <&vcc5v0_host_30>;
 	status = "okay";
 };
 
 &u2phy2_host {
+	phy-supply = <&vcc5v0_host_20>;
 	status = "okay";
 };
 
 &u2phy3_host {
+	phy-supply = <&vcc5v0_host_20>;
+    status = "okay";
+};
+
+&usbdrd3_0 {
+    status = "okay";
+};
+
+&usbdrd_dwc3_0 {
 	status = "okay";
+	dr_mode = "host";
+	extcon = <&u2phy0>;
 };
 
 &usb_host0_ehci {
@@ -711,63 +661,12 @@
 	status = "okay";
 };
 
-/* USB 3.0 & USB-C: PHY, DP Alt Mode, OTG */
 &usbdp_phy0 {
-	status = "okay";
-
-	orientation-switch;
-	svid = <0xff01>;
-        sbu1-dc-gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_HIGH>;
-        sbu2-dc-gpios = <&gpio4 RK_PA1 GPIO_ACTIVE_HIGH>;
-        status = "okay";
-	port {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		usbdp_phy0_orientation_switch: endpoint@0 {
-			reg = <0>;
-			remote-endpoint = <&usbc0_orien_sw>;
-		};
-
-		usbdp_phy0_dp_altmode_mux: endpoint@1 {
-			reg = <1>;
-			remote-endpoint = <&dp_altmode_mux>;
-		};
-	};
-};
-
-&usbdp_phy0_dp {
 	status = "okay";
 };
 
 &usbdp_phy0_u3 {
 	status = "okay";
-};
-
-&usbdrd3_0 {
-	status = "okay";
-};
-
-&usbdrd_dwc3_0 {
-    dr_mode = "peripheral";
-	status = "okay";
-
-	usb-role-switch;
-	port {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		dwc3_0_role_switch: endpoint@0 {
-			reg = <0>;
-			remote-endpoint = <&usbc0_role_sw>;
-		};
-	};
-};
-
-&usbhost3_0 {
-    status = "okay";
-};
-
-&usbhost_dwc3_0 {
-    status = "okay";
 };
 
 /* PCIe */
@@ -939,12 +838,12 @@
 	};
 	/* USB */
     usb {
-        vcc5v0_host20_en: vcc5v0-host20-en {
-            rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+        vcc5v0_host20_en: vcc5v0-host20-en { // USB 2.0
+            rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
         };
-		vcc5v0_host30_en: vcc5v0-host30-en {
-			rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
+        vcc5v0_host30_en: vcc5v0-host30-en { // USB 3.0
+            rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>;
+        };
     };
     /* LCD */
 	lcd {
@@ -981,14 +880,14 @@
     xgpio {
         gpio_4g:gpio-4g{
                 rockchip,pins =
-					<0 23  RK_FUNC_GPIO &pcfg_pull_up>,
+					<0 23  RK_FUNC_GPIO &pcfg_pull_up>;
 					//<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
 					//<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
 					//<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
 					//<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
 					//<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
-					<4 7  RK_FUNC_GPIO &pcfg_pull_up>,
-					<0 8  RK_FUNC_GPIO &pcfg_pull_up>;
+					//<4 7  RK_FUNC_GPIO &pcfg_pull_up>,
+					//<0 8  RK_FUNC_GPIO &pcfg_pull_up>;
 					//<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
 					//<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
         };
