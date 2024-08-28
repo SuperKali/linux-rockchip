@@ -9,6 +9,7 @@
 #define DSI1_LCD  0
 
 #if DSI0_LCD
+
 &dsi0 {
     status = "okay";
     rockchip,lane-rate = <1000>;
