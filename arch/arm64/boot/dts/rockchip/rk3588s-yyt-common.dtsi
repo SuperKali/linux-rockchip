@@ -950,20 +950,4 @@
 			rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
     };
-
-    xgpio {
-        gpio_4g:gpio-4g{
-                rockchip,pins =
-					<0 23  RK_FUNC_GPIO &pcfg_pull_up>;
-					//<3 26 RK_FUNC_GPIO &pcfg_pull_up>,
-					//<3 27 RK_FUNC_GPIO &pcfg_pull_up>,
-					//<0 21 RK_FUNC_GPIO &pcfg_pull_up>,
-					//<0 29 RK_FUNC_GPIO &pcfg_pull_up>,
-					//<4 6  RK_FUNC_GPIO &pcfg_pull_up>,
-					//<4 7  RK_FUNC_GPIO &pcfg_pull_up>,
-					//<0 8  RK_FUNC_GPIO &pcfg_pull_up>;
-					//<4 10  RK_FUNC_GPIO &pcfg_pull_none>,
-					//<4 13 RK_FUNC_GPIO &pcfg_pull_up>;
-        };
-    };
 };
